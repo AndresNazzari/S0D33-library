@@ -1,13 +1,13 @@
-package infrastructure.mysql;
+package infrastructure.sqlite;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DbConnection {
-    private static DbConnection instance = null;
+public class SqliteDbConnection {
+    private static SqliteDbConnection instance = null;
 
-    private DbConnection() {
+    private SqliteDbConnection() {
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
@@ -16,16 +16,15 @@ public class DbConnection {
         }
     }
 
-    public static synchronized DbConnection getInstance() {
+    public static synchronized SqliteDbConnection getInstance() {
         if (instance == null) {
-            instance = new DbConnection();
+            instance = new SqliteDbConnection();
         }
         return instance;
     }
 
-    public Connection getConnection() {
+    public Connection getConnection(String url) {
         try {
-            String url = "jdbc:sqlite:libraryDb.db";
             return DriverManager.getConnection(url);
         } catch (SQLException e) {
             System.out.println("Error connecting to the database: " + e.getMessage());

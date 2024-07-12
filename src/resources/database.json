@@ -1,0 +1,396 @@
+{
+  "name": "s0d33library",
+  "tables": [
+    {
+      "name": "users",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INT",
+          "isPrimaryKey": true,
+          "isAutoIncrement": true,
+          "isNullable": false
+        },
+        {
+          "name": "first_name",
+          "type": "VARCHAR(45)",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "last_name",
+          "type": "VARCHAR(45)",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        }
+      ]
+    },
+    {
+      "name": "authors",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INT",
+          "isPrimaryKey": true,
+          "isAutoIncrement": true,
+          "isNullable": false
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(255)",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false,
+          "defaultValue": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": true
+        }
+      ]
+    },
+    {
+      "name": "genres",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INT",
+          "isPrimaryKey": true,
+          "isAutoIncrement": true,
+          "isNullable": false
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(45)",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false,
+          "defaultValue": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": true
+        }
+      ]
+    },
+    {
+      "name": "books",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INT",
+          "isPrimaryKey": true,
+          "isAutoIncrement": true,
+          "isNullable": false
+        },
+        {
+          "name": "id_authors",
+          "type": "INT",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "id_genres",
+          "type": "INT",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "title",
+          "type": "VARCHAR(45)",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "publish_date",
+          "type": "DATE",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "description",
+          "type": "LONGTEXT",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false,
+          "defaultValue": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "columnName": "id_authors",
+          "referenceTable": "authors",
+          "referenceColumn": "id"
+        },
+        {
+          "columnName": "id_genres",
+          "referenceTable": "genres",
+          "referenceColumn": "id"
+        }
+      ]
+    },
+    {
+      "name": "books_copies",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INT",
+          "isPrimaryKey": true,
+          "isAutoIncrement": true,
+          "isNullable": false
+        },
+        {
+          "name": "id_books",
+          "type": "INT",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "is_available",
+          "type": "TINYINT",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false,
+          "defaultValue": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "columnName": "id_books",
+          "referenceTable": "books",
+          "referenceColumn": "id"
+        }
+      ]
+    },
+    {
+      "name": "customers",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INT",
+          "isPrimaryKey": true,
+          "isAutoIncrement": true,
+          "isNullable": false
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(45)",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": true
+        },
+        {
+          "name": "address",
+          "type": "VARCHAR(45)",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": true
+        },
+        {
+          "name": "phone",
+          "type": "VARCHAR(45)",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": true
+        },
+        {
+          "name": "id_users",
+          "type": "INT",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        }
+      ],
+      "foreignKeys": [
+        {
+          "columnName": "id_users",
+          "referenceTable": "users",
+          "referenceColumn": "id"
+        }
+      ]
+    },
+    {
+      "name": "loans",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INT",
+          "isPrimaryKey": true,
+          "isAutoIncrement": true,
+          "isNullable": false
+        },
+        {
+          "name": "id_books_copies",
+          "type": "INT",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false,
+          "defaultValue": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": true
+        },
+        {
+          "name": "id_customers",
+          "type": "INT",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        }
+      ],
+      "foreignKeys": [
+        {
+          "columnName": "id_books_copies",
+          "referenceTable": "books_copies",
+          "referenceColumn": "id"
+        },
+        {
+          "columnName": "id_customers",
+          "referenceTable": "customers",
+          "referenceColumn": "id"
+        }
+      ]
+    },
+    {
+      "name": "staff",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INT",
+          "isPrimaryKey": true,
+          "isAutoIncrement": true,
+          "isNullable": false
+        },
+        {
+          "name": "id_users",
+          "type": "INT",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "username",
+          "type": "VARCHAR(100)",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        },
+        {
+          "name": "password",
+          "type": "VARCHAR(20)",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": false
+        }
+      ],
+      "foreignKeys": [
+        {
+          "columnName": "id_users",
+          "referenceTable": "users",
+          "referenceColumn": "id"
+        }
+      ]
+    }
+  ]
+}
