@@ -3,13 +3,14 @@ package infrastructure.strategy;
 import infrastructure.dbConnections.MysqlDbConnection;
 import infrastructure.entities.ColumnInfo;
 import infrastructure.entities.DatabaseInfo;
+import infrastructure.entities.ForeignKey;
 import infrastructure.entities.TableInfo;
 
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
 
-public class MySQLStrategy implements DatabaseStrategy {
+public class MySQLStrategy extends BaseStrategy implements DatabaseStrategy {
     private String url;
     private String user;
     private String password;
@@ -49,26 +50,18 @@ public class MySQLStrategy implements DatabaseStrategy {
                     ColumnInfo column = columns.get(i);
                     sql.append(column.getName()).append(" ").append(column.getType());
 
-                    if (column.isPrimaryKey()) {
-                        sql.append(" PRIMARY KEY");
-                    }
-
                     if (column.isAutoIncrement()) {
                         sql.append(" AUTO_INCREMENT");
                     }
 
-                    if (!column.isNullable()) {
-                        sql.append(" NOT NULL");
-                    }
-
-                    if (column.getDefaultValue() != null) {
-                        sql.append(" DEFAULT ").append(column.getDefaultValue());
-                    }
+                    sql = addOptions(sql, column);
 
                     if (i < columns.size() - 1) {
                         sql.append(", ");
                     }
                 }
+
+                sql = addFk(sql, table);
 
                 sql.append(");");
                 statement.executeUpdate(sql.toString());

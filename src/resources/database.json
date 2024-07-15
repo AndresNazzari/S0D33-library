@@ -25,7 +25,8 @@
           "isAutoIncrement": false,
           "isNullable": false
         }
-      ]
+      ],
+      "foreignKeys": []
     },
     {
       "name": "authors",
@@ -66,7 +67,8 @@
           "isAutoIncrement": false,
           "isNullable": true
         }
-      ]
+      ],
+      "foreignKeys": []
     },
     {
       "name": "genres",
@@ -107,7 +109,8 @@
           "isAutoIncrement": false,
           "isNullable": true
         }
-      ]
+      ],
+      "foreignKeys": []
     },
     {
       "name": "books",

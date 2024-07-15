@@ -2,6 +2,7 @@ package infrastructure.strategy;
 
 import infrastructure.entities.ColumnInfo;
 import infrastructure.entities.DatabaseInfo;
+import infrastructure.entities.ForeignKey;
 import infrastructure.entities.TableInfo;
 import infrastructure.dbConnections.SqliteDbConnection;
 
@@ -9,7 +10,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
 
-public class SQLiteStrategy implements DatabaseStrategy {
+public class SQLiteStrategy extends BaseStrategy implements DatabaseStrategy {
     private String url;
 
     public SQLiteStrategy(String url) {
@@ -31,18 +32,12 @@ public class SQLiteStrategy implements DatabaseStrategy {
                 //create columns
                 for (int i = 0; i < columns.size(); i++) {
                     ColumnInfo column = columns.get(i);
-                    sql.append(column.getName()).append(" ").append(column.getType());
+                    sql.append(column.getName());
 
-                    if (column.isPrimaryKey()) {
-                        sql.append(" PRIMARY KEY");
-                    }
-
-                    if (!column.isNullable()) {
-                        sql.append(" NOT NULL");
-                    }
-
-                    if (column.getDefaultValue() != null) {
-                        sql.append(" DEFAULT ").append(column.getDefaultValue());
+                    if (column.isAutoIncrement() && column.getType().equalsIgnoreCase("INT")) {
+                        sql.append(" INTEGER PRIMARY KEY AUTOINCREMENT");
+                    } else {
+                        sql = addOptions(sql, column);
                     }
 
                     if (i < columns.size() - 1) {
@@ -50,8 +45,9 @@ public class SQLiteStrategy implements DatabaseStrategy {
                     }
                 }
 
-                sql.append(");");
+                sql = addFk(sql, table);
 
+                sql.append(");");
                 statement.executeUpdate(sql.toString());
                 System.out.println("Table " + table.getName() + " created successfully or already exists.");
 
