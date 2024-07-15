@@ -8,8 +8,6 @@ import java.io.InputStream;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.print("Hello and welcome!");
-
         try {
             ClassLoader classLoader = Main.class.getClassLoader();
             InputStream inputStream = classLoader.getResourceAsStream("resources/database.json");
@@ -30,7 +28,7 @@ public class Main {
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-            //e.printStackTrace();
+            throw new RuntimeException("Error", e);
         }
     }
 }

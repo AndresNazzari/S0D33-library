@@ -1,11 +1,11 @@
 package infrastructure.strategy;
 
+import infrastructure.dbConnections.MysqlDbConnection;
 import infrastructure.entities.ColumnInfo;
 import infrastructure.entities.DatabaseInfo;
 import infrastructure.entities.TableInfo;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.List;
 
@@ -22,16 +22,29 @@ public class MySQLStrategy implements DatabaseStrategy {
 
     @Override
     public void createTables(DatabaseInfo databaseInfo) {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             Statement statement = connection.createStatement()) {
+        try {
+            // Conectar a MySQL sin especificar una base de datos
+            Connection connection = MysqlDbConnection.getInstance().getConnection(url, user, password);
+            Statement statement = connection.createStatement();
 
+            // Crear la base de datos si no existe
             statement.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseInfo.getName());
-            statement.executeUpdate("USE " + databaseInfo.getName());
+            System.out.println("Database " + databaseInfo.getName() + " created successfully or already exists.");
 
+            // Cerrar la conexión inicial
+            statement.close();
+            connection.close();
+
+            // Conectar a MySQL especificando la nueva base de datos
+            connection = MysqlDbConnection.getInstance().getConnection(url + databaseInfo.getName(), user, password);
+            statement = connection.createStatement();
+
+            // create tables
             for (TableInfo table : databaseInfo.getTables()) {
                 StringBuilder sql = new StringBuilder("CREATE TABLE IF NOT EXISTS " + table.getName() + " (");
                 List<ColumnInfo> columns = table.getColumns();
 
+                //create columns
                 for (int i = 0; i < columns.size(); i++) {
                     ColumnInfo column = columns.get(i);
                     sql.append(column.getName()).append(" ").append(column.getType());
@@ -59,9 +72,14 @@ public class MySQLStrategy implements DatabaseStrategy {
 
                 sql.append(");");
                 statement.executeUpdate(sql.toString());
+                System.out.println("Table " + table.getName() + " created successfully or already exists.");
+
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error creating MySQLStrategy: " + e.getMessage());
+            throw new RuntimeException("Error creating MySQLStrategy", e);
+        } finally {
+            System.out.println("-------------------------");
         }
     }
 }
