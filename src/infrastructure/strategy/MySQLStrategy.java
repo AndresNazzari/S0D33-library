@@ -3,7 +3,6 @@ package infrastructure.strategy;
 import infrastructure.dbConnections.MysqlDbConnection;
 import infrastructure.entities.ColumnInfo;
 import infrastructure.entities.DatabaseInfo;
-import infrastructure.entities.ForeignKey;
 import infrastructure.entities.TableInfo;
 
 import java.sql.Connection;
@@ -11,34 +10,12 @@ import java.sql.Statement;
 import java.util.List;
 
 public class MySQLStrategy extends BaseStrategy implements DatabaseStrategy {
-    private String url;
-    private String user;
-    private String password;
-
-    public MySQLStrategy(String url, String user, String password) {
-        this.url = url;
-        this.user = user;
-        this.password = password;
-    }
 
     @Override
     public void createTables(DatabaseInfo databaseInfo) {
         try {
-            // Conectar a MySQL sin especificar una base de datos
-            Connection connection = MysqlDbConnection.getInstance().getConnection(url, user, password);
+            Connection connection = MysqlDbConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
-
-            // Crear la base de datos si no existe
-            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseInfo.getName());
-            System.out.println("Database " + databaseInfo.getName() + " created successfully or already exists.");
-
-            // Cerrar la conexión inicial
-            statement.close();
-            connection.close();
-
-            // Conectar a MySQL especificando la nueva base de datos
-            connection = MysqlDbConnection.getInstance().getConnection(url + databaseInfo.getName(), user, password);
-            statement = connection.createStatement();
 
             // create tables
             for (TableInfo table : databaseInfo.getTables()) {

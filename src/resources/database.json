@@ -144,8 +144,8 @@
           "isNullable": false
         },
         {
-          "name": "publish_date",
-          "type": "DATE",
+          "name": "publish_year",
+          "type": "INT",
           "isPrimaryKey": false,
           "isAutoIncrement": false,
           "isNullable": false
@@ -311,6 +311,13 @@
           "isPrimaryKey": false,
           "isAutoIncrement": false,
           "isNullable": false
+        },
+        {
+          "name": "due_date",
+          "type": "DATETIME",
+          "isPrimaryKey": false,
+          "isAutoIncrement": false,
+          "isNullable": true
         },
         {
           "name": "created_at",

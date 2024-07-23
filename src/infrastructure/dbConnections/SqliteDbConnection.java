@@ -6,13 +6,16 @@ import java.sql.SQLException;
 
 public class SqliteDbConnection {
     private static SqliteDbConnection instance = null;
+    private Connection connection;
+    private static final String URL = "jdbc:sqlite:src/resources/s0d33library.db";
 
     private SqliteDbConnection() {
         try {
             Class.forName("org.sqlite.JDBC");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Driver for Sqlite not found: " + e.getMessage());
-            throw new RuntimeException("Driver for Sqlite not found", e);
+            this.connection = DriverManager.getConnection(URL);
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Error initializing SQLite connection: " + e.getMessage());
+            throw new RuntimeException("Error initializing SQLite connection", e);
         }
     }
 
@@ -25,12 +28,15 @@ public class SqliteDbConnection {
         return instance;
     }
 
-    public Connection getConnection(String url) {
+    public Connection getConnection() {
         try {
-            return DriverManager.getConnection(url);
+            if (this.connection == null || this.connection.isClosed()) {
+                this.connection = DriverManager.getConnection(URL);
+            }
         } catch (SQLException e) {
-            System.out.println("Error connecting to the Sqlite database : " + e.getMessage());
-            throw new RuntimeException("Error connecting to the Sqlite database ", e);
+            System.out.println("Error maintaining the SQLite connection: " + e.getMessage());
+            throw new RuntimeException("Error maintaining the SQLite connection", e);
         }
+        return this.connection;
     }
 }

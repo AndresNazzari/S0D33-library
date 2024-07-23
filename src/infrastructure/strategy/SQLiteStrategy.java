@@ -2,7 +2,6 @@ package infrastructure.strategy;
 
 import infrastructure.entities.ColumnInfo;
 import infrastructure.entities.DatabaseInfo;
-import infrastructure.entities.ForeignKey;
 import infrastructure.entities.TableInfo;
 import infrastructure.dbConnections.SqliteDbConnection;
 
@@ -11,16 +10,11 @@ import java.sql.Statement;
 import java.util.List;
 
 public class SQLiteStrategy extends BaseStrategy implements DatabaseStrategy {
-    private String url;
-
-    public SQLiteStrategy(String url) {
-        this.url = url;
-    }
 
     @Override
     public void createTables(DatabaseInfo databaseInfo) {
         try {
-            Connection connection = SqliteDbConnection.getInstance().getConnection(url);
+            Connection connection = SqliteDbConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
             System.out.println("Database " + databaseInfo.getName() + " created successfully or already exists.");
 

@@ -6,13 +6,18 @@ import java.sql.SQLException;
 
 public class MysqlDbConnection {
     private static MysqlDbConnection instance = null;
+    private Connection connection;
+    private static final String URL = "jdbc:mysql://localhost:3306/s0d33library";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "";
 
     private MysqlDbConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Driver for MySQL not found: " + e.getMessage());
-            throw new RuntimeException("Driver for MySQL not found", e);
+            this.connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Error initializing MySQL connection: " + e.getMessage());
+            throw new RuntimeException("Error initializing MySQL connection", e);
         }
     }
 
@@ -25,12 +30,15 @@ public class MysqlDbConnection {
         return instance;
     }
 
-    public Connection getConnection(String url, String username, String password) {
+    public Connection getConnection() {
         try {
-            return DriverManager.getConnection(url, username, password);
+            if (this.connection == null || this.connection.isClosed()) {
+                this.connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            }
         } catch (SQLException e) {
-            System.out.println("Error connecting to the MySQL database: " + e.getMessage());
-            throw new RuntimeException("Error connecting to the MySQL database", e);
+            System.out.println("Error maintaining the MySQL connection: " + e.getMessage());
+            throw new RuntimeException("Error maintaining the MySQL connection", e);
         }
+        return this.connection;
     }
 }
