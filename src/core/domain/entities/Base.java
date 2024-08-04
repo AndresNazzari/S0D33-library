@@ -2,10 +2,13 @@ package core.domain.entities;
 
 public abstract class Base {
     private int id;
-    private String createdAt;
-    private String updatedAt;
-    private String deletedAt;
 
+    public Base() {
+    }
+
+    public Base(int id) {
+        setId(id);
+    }
 
     public int getId() {
         return id;
@@ -13,29 +16,5 @@ public abstract class Base {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public String getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(String deletedAt) {
-        this.deletedAt = deletedAt;
     }
 }
