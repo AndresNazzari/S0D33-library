@@ -65,6 +65,12 @@ préstamos pendientes, el libro más popular y el usuario con más préstamos en
    En este caso, se utilizó para definir diferentes estrategias de base de datos y permitir que el sistema pueda cambiar
    de una base de datos a otra en tiempo de ejecución.
 
+![entidades](https://github.com/user-attachments/assets/e0fa0993-10a5-4f04-a609-dfbfa6c4e94b)
+
+![ddbb](https://github.com/user-attachments/assets/a1369103-2851-4ceb-9fe1-2207d17ba07b)
+
+![creacion tablas](https://github.com/user-attachments/assets/ebfc9a44-8091-4ea3-b082-29a6946f1653)
+
 # Instrucciones para ejecutar el sistema
 
 1. Clonar el repositorio
